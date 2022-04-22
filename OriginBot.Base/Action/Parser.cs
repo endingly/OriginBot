@@ -5,7 +5,7 @@ using System.Text.Encodings;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace originlab_command
+namespace Originbot.Base
 {
     public static class Parser
     {

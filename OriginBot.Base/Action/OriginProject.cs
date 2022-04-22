@@ -5,8 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Origin;
 
-namespace originlab_command
+namespace Originbot.Base
 {
+    /// 别名
+    using OriginWorkBook = System.Collections.Generic.Dictionary<string, List<KeyValuePair<string, string>>>;    
+
     public class OriginProject
     {
         Origin.Application _org;
@@ -16,12 +19,16 @@ namespace originlab_command
         {
             _org = new Origin.Application();
             _projectPath = "";
+            // 新建工程
+            _org.NewProject();
         }
 
         public OriginProject(string path)
         {
             _org = new Origin.Application();
             _projectPath = path;
+            // 新建工程
+            _org.NewProject();
         }
 
         public string ProjectPath
@@ -58,7 +65,7 @@ namespace originlab_command
         /// </summary>
         /// <param name="filenames"></param>
         /// <returns></returns>
-        private bool CreatDataGroup(List<string> filenames)
+        private bool CreateWorkSheet(OriginWorkBook filenames)
         {
             try
             {
@@ -77,12 +84,14 @@ namespace originlab_command
                 Origin.WorksheetPage orgWkBk = _org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
 
 
+
             }
             catch (Exception)
             {
 
                 throw;
             }
+            return true;
         }
 
 

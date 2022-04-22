@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using originlab_command;
+using Originbot.Base;
 using Xunit.Abstractions;
 using Xunit;
 using System.Text.RegularExpressions;
 
-namespace originlab_test
+namespace Originbot.Test
 {
     public class Test_Parser
     {

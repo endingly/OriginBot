@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace originlab_command
+namespace Originbot.Base
 {
     public class DataInput
     {

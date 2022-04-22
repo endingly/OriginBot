@@ -1,8 +1,8 @@
 using Xunit;
-using originlab_command;
+using Originbot.Base;
 using Xunit.Abstractions;
 
-namespace originlab_test
+namespace Originbot.Test
 {
     public class Test_InputManager
     {
