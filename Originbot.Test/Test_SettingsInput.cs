@@ -25,7 +25,7 @@ namespace Originbot.Test
         {
             string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\path.json";
             var result = SettingsInput.GetSettingsInfo(settingsFilePath).Result;
-            _output.WriteLine(result.First.First.First.ToString());
+            _output.WriteLine(result.First.ToString());
 
         }
     }

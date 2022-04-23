@@ -1,5 +1,7 @@
 # Originlab Command  项目
 
+![结构](D:\Users\codelib\OriginBot\pic\func.png)
+
 此项目是为了更有效的导入实验数据所写，在使用上需要有一下注意几点
 
 1. 使用必须要有 VS 以及 origin，由于 originlab 的限制，此应用程序无法发布二进制包，需要和本地机器中的 origin.dll 重新编译一次才能使用，这可能是官方为了稳定起见做的考虑。

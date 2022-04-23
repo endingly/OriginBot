@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using OriginWorkBook = Newtonsoft.Json.Linq.JObject;    // 别名
+
 namespace Originbot.Base
 {
     public class DataInput
