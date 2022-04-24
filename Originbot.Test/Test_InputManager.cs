@@ -4,23 +4,24 @@ using Xunit.Abstractions;
 
 namespace Originbot.Test
 {
-    public class Test_InputManager
+    public class Test_DataInput
     {
         private readonly ITestOutputHelper _output;
 
-        public Test_InputManager(ITestOutputHelper output)
+        public Test_DataInput(ITestOutputHelper output)
         {
             _output = output;
         }
 
         [Fact]
-        public void Test_GetFileContentAsync()
+        public async void Test_GetSingleFileContentAsync()
         {
-            var filePath = "D:\\Users\\codelib\\originlab\\originlab_test\\bin\\Debug\\net6.0\\电子密度_偏轴4.txt";
-            DataInput inputManager = new DataInput(filePath);
-            var flag = inputManager.GetFileContentAsync();
-            _output.WriteLine(flag.Result.ToString());
-            _output.WriteLine(inputManager.Content[filePath].Length.ToString());
+            string file = "D:\\用户\\2020-2023\\研究生涯\\实验数据\\微空心阴极放电模拟\\[2022.4.1] 风洞项目经验 [9.5mm] [托宽后方]\\数据分析\\平板\\电子密度\\电子密度_偏轴1.txt";
+            var result = await DataInput.GetSingleFileContentAsync(file);
+            foreach (var item in result[0])
+            {
+                _output.WriteLine(System.Convert.ToString(item));
+            }
         }
     }
 }

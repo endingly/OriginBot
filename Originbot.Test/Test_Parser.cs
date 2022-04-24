@@ -22,6 +22,7 @@ namespace Originbot.Test
         [Fact]
         public void Test_Parse()
         {
+            /*
             var filePath = "D:\\Users\\codelib\\originlab\\originlab_test\\bin\\Debug\\net6.0\\电子密度_偏轴4.txt";
             DataInput inputManager = new DataInput(filePath);
             var flag = inputManager.GetFileContentAsync();
@@ -33,7 +34,7 @@ namespace Originbot.Test
                 _output.WriteLine(flag.Result.ToString());
                 _output.WriteLine(result.Count.ToString());
                 Assert.True(true);
-            }
+            }*/
         }
 
     }

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit.Abstractions;
+﻿using Xunit.Abstractions;
 using Xunit;
 using Originbot.Base;
 
 namespace Originbot.Test
 {
-    using OriginWorkBook = Newtonsoft.Json.Linq.JObject;
-
     public class Test_SettingsInput
     {
         private readonly ITestOutputHelper _output;
@@ -23,10 +16,14 @@ namespace Originbot.Test
         [Fact]
         public void Test_GetSettingsInfo()
         {
-            string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\path.json";
+            string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\data.txt";
             var result = SettingsInput.GetSettingsInfo(settingsFilePath).Result;
-            _output.WriteLine(result.First.ToString());
-
+            if (result != null)
+                /*foreach (var item in result.Value.DataFilePath)
+                {
+                    _output.WriteLine(item);
+                }*/
+                _output.WriteLine(result.Value.Name);
         }
     }
 }
