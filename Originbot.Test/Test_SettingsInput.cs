@@ -16,12 +16,13 @@ namespace Originbot.Test
         [Fact]
         public void Test_GetSettingsInfo()
         {
-            string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\data.txt";
-            var result = SettingsInput.GetSettingsInfo(settingsFilePath);
+            string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\example_settings.txt";
+            string projectPath = "";
+            var result = SettingsInput.GetSettingsInfo(settingsFilePath, ref projectPath);
             if (result != null)
             {
-                _output.WriteLine(result.Value.Name);
-                _output.WriteLine(result.Value.SavePath);
+                _output.WriteLine(result[0].Name);
+                _output.WriteLine(result[1].Name);
             }
                 
         }

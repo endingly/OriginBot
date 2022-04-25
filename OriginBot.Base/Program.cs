@@ -13,11 +13,16 @@ namespace Originbot
 
         static void Run(CommandlineOptions options)
         {
-            string projectSavePath = "D:\\Users\\codelib\\OriginBot\\test.opju";
-            string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\data.txt";
             OriginProject origin = new OriginProject();
-            origin.CreatWorkBookFromSettingsFile(options.Filepath);
-            origin.Exit();
+            if (options.Filepath != null)
+            {
+                origin.CreatDataGroupFromSettingsFile(options.Filepath);
+                origin.Exit();
+            }
+            else
+            {
+                System.Console.Error.WriteLine("Maybe input settings file path!");
+            }
         }
     }
 }

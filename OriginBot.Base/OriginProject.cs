@@ -10,7 +10,7 @@ namespace Originbot.Base
     public class OriginProject
     {
         Origin.Application _org;
-        WorksheetPage _orgWorkBook;     // 当前工作簿句柄
+        WorksheetPage? _orgWorkBook;     // 当前工作簿句柄
         string _projectPath;
 
         /// <summary>
@@ -26,25 +26,10 @@ namespace Originbot.Base
             _projectPath = "";
             // 新建工程
             _org.NewProject();
-            _orgWorkBook = CreatWorkBook();
+            _orgWorkBook = null;
         }
 
-        /// <summary>
-        /// 创建一个新的 origin 工程, 并由此类维护
-        /// </summary>
-        /// <param name="path">工程的保存路径</param>
-        /*public OriginProject(string path)
-        {
-            _org = new Origin.Application();
-            if (_org == null)
-            {
-                Console.Error.WriteLine("Origin could not be started. Check that your installation and project references are correct.");
-            }
-            _projectPath = path;
-            // 新建工程
-            _org.NewProject();
-            _orgWorkBook = CreatWorkBook();
-        }*/
+        
 
         public void Exit()
         {
@@ -76,28 +61,40 @@ namespace Originbot.Base
             }
         }
 
-        private WorksheetPage CreatWorkBook()
+        private WorksheetPage AddWorkBook()
         {
             return _org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
+        }
+
+        private void CreateWorkBook(OriginWorkBook settingsInfo)
+        {
+            // 新增一个工作簿
+            _orgWorkBook = AddWorkBook();
+
+            // 设置工作簿名称
+            _orgWorkBook.LongName = settingsInfo.Name;
+            // 添加数据
+            for (int i = 0; i < settingsInfo.DataFilePath.Count; i++)
+            {
+                CreateWorkSheet(settingsInfo.DataFilePath[i],
+                                settingsInfo.ColUnit);
+            }
+            Save();
         }
 
         /// <summary>
         /// 为工作簿添加一张工作表
         /// </summary>
         /// <param name="filepath">工作表的数据来源</param>
-        /// <param name="orgWkBk">工作簿句柄</param>
+        /// <param name="unit">单位描述</param>
         /// <param name="index">工作表在工作簿中的位置</param>
         /// <returns></returns>
-        private void CreateWorkSheet(string filepath, int index, List<KeyValuePair<string, string>> unit)
+        private void CreateWorkSheet(string filepath, List<KeyValuePair<string, string>> unit)
         {
             try
             {
-                //var _orgWorkBook=_org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
-                // 添加工作簿
-                //Origin.WorksheetPage orgWkBks = _org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
-                //var orgWks = (Origin.Worksheet)_orgWorkBook.Layers[index];
-
                 var orgWks = _orgWorkBook.Layers.Add() as Origin.Worksheet;
+                
                 if (orgWks == null)
                 {
                     Console.Error.WriteLine("Faild to add a work sheet!");
@@ -144,9 +141,10 @@ namespace Originbot.Base
             }
         }
 
-        public void CreatWorkBookFromSettingsFile(string settingFilePath)
+        public void CreatDataGroupFromSettingsFile(string settingFilePath)
         {
-            var settingsInfo = SettingsInput.GetSettingsInfo(settingFilePath);
+            string ProjectSavePath = "";
+            var settingsInfo = SettingsInput.GetSettingsInfo(settingFilePath, ref ProjectSavePath);
             if (settingsInfo == null)
             {
                 Console.WriteLine("Settings Error!");
@@ -155,17 +153,11 @@ namespace Originbot.Base
             //var _orgWorkBook=_org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
 
             // 设置工程的保存路径
-            ProjectPath = settingsInfo.Value.SavePath;
-            // 设置工作簿名称
-            _orgWorkBook.LongName = settingsInfo.Value.Name;
-            // 添加数据
-            for (int i = 0; i < settingsInfo.Value.DataFilePath.Count; i++)
+            ProjectPath = ProjectSavePath;
+            foreach(var item in settingsInfo)
             {
-                CreateWorkSheet(settingsInfo.Value.DataFilePath[i],
-                                i,
-                                settingsInfo.Value.ColUnit);
+                CreateWorkBook(item);
             }
-            Save();
         }
     }
 }

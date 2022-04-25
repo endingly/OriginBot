@@ -16,12 +16,13 @@ namespace Originbot.Test
         [Fact]
         public void Test_CreatDataGroup()
         {
-            /*
-            string projectSavePath = "D:\\Users\\codelib\\OriginBot\\test.opj";
-            string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\data.txt";
+            //string projectSavePath = "D:\\Users\\codelib\\OriginBot\\test.opj";
+            string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\example_settings.txt";
             OriginProject project = new OriginProject();
-            project.CreatWorkBookFromSettingsFile();
-            Assert.True(true);*/
+            
+            project.CreatDataGroupFromSettingsFile(settingsFilePath);
+            project.Exit();
+            Assert.True(true);
         }
     }
 }

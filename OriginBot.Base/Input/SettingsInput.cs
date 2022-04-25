@@ -8,14 +8,12 @@ namespace Originbot.Base
 {
     public struct OriginWorkBook
     {
-        public string SavePath;
         public string Name;
         public List<KeyValuePair<string, string>> ColUnit;
         public List<string> DataFilePath;
 
         public OriginWorkBook()
         {
-            SavePath = "";
             Name = "";
             ColUnit = new List<KeyValuePair<string, string>>();
             DataFilePath = new List<string>();
@@ -32,7 +30,7 @@ namespace Originbot.Base
         /// </summary>
         /// <param name="settingsFilePath"></param>
         /// <returns></returns>
-        public static OriginWorkBook? GetSettingsInfo(string settingsFilePath)
+        public static List<OriginWorkBook>? GetSettingsInfo(string settingsFilePath, ref string ProjectSavePath)
         {
             // 读取设置文件
             var filestream = File.OpenRead(settingsFilePath);
@@ -42,7 +40,7 @@ namespace Originbot.Base
             var parseString = Encoding.UTF8.GetString(infos);
             if (parseString == null)
                 return null;
-            var result = ParseStringToOriginWorkBook(parseString);
+            var result = ParseStringToOriginWorkBookList(parseString, ref ProjectSavePath);
             return result;
         }
 
@@ -51,12 +49,10 @@ namespace Originbot.Base
             // 初始化结构
             var result = new OriginWorkBook();
             //var ParsePtr = 0;  // 解析指针
-            // 提取存储路径
-            result.SavePath = str.Substring(str.IndexOf('{') + 1,
-                                            str.IndexOf('}') - str.IndexOf('{') - 1);
-            // 提取名字
-            result.Name = str.Substring(str.IndexOf('[') + 1,
-                                        str.IndexOf(']') - str.IndexOf('[') - 1);
+            
+            // 提取工作簿名字
+            result.Name = str.Substring(str.IndexOf('{') + 1,
+                                        str.IndexOf('}') - str.IndexOf('{') - 1);
             // 提取单位以及单位描述
             var unitD = str.Substring(str.IndexOf('(') + 1, 
                                       str.IndexOf(')') - str.IndexOf('(') - 1);
@@ -70,6 +66,32 @@ namespace Originbot.Base
             int index = str.IndexOf(')') + 3;
             var paths = str.Substring(index).Split("\r\n");
             result.DataFilePath = paths.ToList();
+            return result;
+        }
+
+        /// <summary>
+        /// 将多个工作簿解析
+        /// </summary>
+        /// <param name="str">设置文件中的内容</param>
+        /// <param name="ProjectSavePath">将放入工程的存储路径</param>
+        /// <returns></returns>
+        private static List<OriginWorkBook> ParseStringToOriginWorkBookList(string str, ref string ProjectSavePath)
+        {
+            // 初始化结构
+            var result = new List<OriginWorkBook>();
+            //var ParsePtr = 0;  // 解析指针
+            // 提取存储路径
+            ProjectSavePath = str.Substring(str.IndexOf('[') + 1,
+                                            str.IndexOf(']') - str.IndexOf('[') - 1);
+            // 根据 txt 文件的特征，将文件内容拆分成结构相同的几段分别解析
+            var parStrings = str.Split('{').ToList();
+            // 删除存储路径字符
+            parStrings.Remove(parStrings[0]);
+
+            foreach (var par in parStrings)
+            {
+                result.Add(ParseStringToOriginWorkBook(par.Insert(0, "{")));
+            }
             return result;
         }
     }
