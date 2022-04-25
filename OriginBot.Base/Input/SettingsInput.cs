@@ -8,12 +8,14 @@ namespace Originbot.Base
 {
     public struct OriginWorkBook
     {
+        public string SavePath;
         public string Name;
         public List<KeyValuePair<string, string>> ColUnit;
         public List<string> DataFilePath;
 
         public OriginWorkBook()
         {
+            SavePath = "";
             Name = "";
             ColUnit = new List<KeyValuePair<string, string>>();
             DataFilePath = new List<string>();
@@ -48,11 +50,16 @@ namespace Originbot.Base
         {
             // 初始化结构
             var result = new OriginWorkBook();
-
+            //var ParsePtr = 0;  // 解析指针
+            // 提取存储路径
+            result.SavePath = str.Substring(str.IndexOf('{') + 1,
+                                            str.IndexOf('}') - str.IndexOf('{') - 1);
             // 提取名字
-            result.Name = str.Substring(str.IndexOf('[') + 1, str.IndexOf(']') - 1);
+            result.Name = str.Substring(str.IndexOf('[') + 1,
+                                        str.IndexOf(']') - str.IndexOf('[') - 1);
             // 提取单位以及单位描述
-            var unitD = str.Substring(str.IndexOf('(') + 1, str.IndexOf(')') - str.IndexOf('(') - 1);
+            var unitD = str.Substring(str.IndexOf('(') + 1, 
+                                      str.IndexOf(')') - str.IndexOf('(') - 1);
             foreach (var pair in unitD.Split(';'))
             {
                 var x = pair.Split(',');

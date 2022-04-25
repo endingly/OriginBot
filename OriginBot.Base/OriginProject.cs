@@ -13,12 +13,15 @@ namespace Originbot.Base
         WorksheetPage _orgWorkBook;     // 当前工作簿句柄
         string _projectPath;
 
+        /// <summary>
+        /// 默认构造函数，新建一个 origin 工程，并由此类维护
+        /// </summary>
         public OriginProject()
         {
             _org = new Origin.Application();
             if (_org == null)
             {
-                Console.WriteLine("Origin could not be started. Check that your installation and project references are correct.");
+                Console.Error.WriteLine("Origin could not be started. Check that your installation and project references are correct.");
             }
             _projectPath = "";
             // 新建工程
@@ -30,7 +33,7 @@ namespace Originbot.Base
         /// 创建一个新的 origin 工程, 并由此类维护
         /// </summary>
         /// <param name="path">工程的保存路径</param>
-        public OriginProject(string path)
+        /*public OriginProject(string path)
         {
             _org = new Origin.Application();
             if (_org == null)
@@ -41,7 +44,7 @@ namespace Originbot.Base
             // 新建工程
             _org.NewProject();
             _orgWorkBook = CreatWorkBook();
-        }
+        }*/
 
         public void Exit()
         {
@@ -150,6 +153,9 @@ namespace Originbot.Base
                 return;
             }
             //var _orgWorkBook=_org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
+
+            // 设置工程的保存路径
+            ProjectPath = settingsInfo.Value.SavePath;
             // 设置工作簿名称
             _orgWorkBook.LongName = settingsInfo.Value.Name;
             // 添加数据

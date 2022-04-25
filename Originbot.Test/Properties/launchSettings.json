@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Originbot.Test": {
+      "commandName": "Project",
+      "commandLineArgs": "-f \"D:\\Users\\codelib\\OriginBot\\data.txt\""
+    }
+  }
+}

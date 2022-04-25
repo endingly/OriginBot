@@ -19,11 +19,11 @@ namespace Originbot.Test
             string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\data.txt";
             var result = SettingsInput.GetSettingsInfo(settingsFilePath);
             if (result != null)
-                /*foreach (var item in result.Value.DataFilePath)
-                {
-                    _output.WriteLine(item);
-                }*/
+            {
                 _output.WriteLine(result.Value.Name);
+                _output.WriteLine(result.Value.SavePath);
+            }
+                
         }
     }
 }
