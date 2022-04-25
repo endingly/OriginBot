@@ -35,7 +35,7 @@ namespace Originbot.Base
             _org = new Origin.Application();
             if (_org == null)
             {
-                Console.WriteLine("Origin could not be started. Check that your installation and project references are correct.");
+                Console.Error.WriteLine("Origin could not be started. Check that your installation and project references are correct.");
             }
             _projectPath = path;
             // 新建工程
@@ -43,9 +43,8 @@ namespace Originbot.Base
             _orgWorkBook = CreatWorkBook();
         }
 
-        ~OriginProject()
+        public void Exit()
         {
-            Save();
             _org.Exit();
         }
 
@@ -66,7 +65,7 @@ namespace Originbot.Base
             // Save:
             if (_org.Save(_projectPath) == false)
             {
-                Console.WriteLine("Failed to save the project into " + _projectPath);
+                Console.Error.WriteLine("Failed to save the project into " + _projectPath);
             }
             else
             {
@@ -93,14 +92,22 @@ namespace Originbot.Base
                 //var _orgWorkBook=_org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
                 // 添加工作簿
                 //Origin.WorksheetPage orgWkBks = _org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
-                var orgWks = (Origin.Worksheet)_orgWorkBook.Layers[index];
+                //var orgWks = (Origin.Worksheet)_orgWorkBook.Layers[index];
 
+                var orgWks = _orgWorkBook.Layers.Add() as Origin.Worksheet;
+                if (orgWks == null)
+                {
+                    Console.Error.WriteLine("Faild to add a work sheet!");
+                    return;
+                }
                 // 将文件名设置为工作表名称
                 orgWks.Name = filepath.Substring(filepath.LastIndexOf("\\") + 1, filepath.LastIndexOf(".") - filepath.LastIndexOf("\\") - 1);
 
                 // 为工作表添加两列
-                var col1 = orgWks.Columns.Add(System.Type.Missing);
-                var col2 = orgWks.Columns.Add(System.Type.Missing);
+                //var col1 = orgWks.Columns.Add(System.Type.Missing);
+                //var col2 = orgWks.Columns.Add(System.Type.Missing);
+                var col1 = orgWks.Columns[0];
+                var col2 = orgWks.Columns[1];
 
                 // 设置长名称，单位以及备注
                 /*
