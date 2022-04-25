@@ -17,7 +17,7 @@ namespace Originbot.Test
         public void Test_GetSettingsInfo()
         {
             string settingsFilePath = "D:\\Users\\codelib\\OriginBot\\data.txt";
-            var result = SettingsInput.GetSettingsInfo(settingsFilePath).Result;
+            var result = SettingsInput.GetSettingsInfo(settingsFilePath);
             if (result != null)
                 /*foreach (var item in result.Value.DataFilePath)
                 {

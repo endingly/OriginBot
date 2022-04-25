@@ -29,12 +29,12 @@ namespace Originbot.Base
         /// </summary>
         /// <param name="settingsFilePath"></param>
         /// <returns></returns>
-        public static async Task<OriginWorkBook?> GetSettingsInfo(string settingsFilePath)
+        public static OriginWorkBook? GetSettingsInfo(string settingsFilePath)
         {
             // 读取设置文件
             var filestream = File.OpenRead(settingsFilePath);
             byte[] infos = new byte[filestream.Length];
-            _ = await filestream.ReadAsync(infos);
+            _ = filestream.Read(infos);
             // 将字节流读取为字符串
             var parseString = Encoding.UTF8.GetString(infos);
             if (parseString == null)

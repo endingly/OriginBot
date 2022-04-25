@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OriginBot.Base", "OriginBot.Base\OriginBot.Base.csproj", "{6DEB1195-5A45-4179-B55C-13688D6B292F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OriginBot.Base", "OriginBot.Base\OriginBot.Base.csproj", "{6DEB1195-5A45-4179-B55C-13688D6B292F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Originbot.Test", "Originbot.Test\Originbot.Test.csproj", "{0CB2A926-4FFC-485E-83AC-1FA9B85B8314}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Originbot.Test", "Originbot.Test\Originbot.Test.csproj", "{0CB2A926-4FFC-485E-83AC-1FA9B85B8314}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

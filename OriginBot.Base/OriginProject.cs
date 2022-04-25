@@ -86,10 +86,11 @@ namespace Originbot.Base
         /// <param name="orgWkBk">工作簿句柄</param>
         /// <param name="index">工作表在工作簿中的位置</param>
         /// <returns></returns>
-        private async void CreateWorkSheet(string filepath, int index, List<KeyValuePair<string, string>> unit)
+        private void CreateWorkSheet(string filepath, int index, List<KeyValuePair<string, string>> unit)
         {
             try
             {
+                //var _orgWorkBook=_org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
                 // 添加工作簿
                 //Origin.WorksheetPage orgWkBks = _org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
                 var orgWks = (Origin.Worksheet)_orgWorkBook.Layers[index];
@@ -98,8 +99,8 @@ namespace Originbot.Base
                 orgWks.Name = filepath.Substring(filepath.LastIndexOf("\\") + 1, filepath.LastIndexOf(".") - filepath.LastIndexOf("\\") - 1);
 
                 // 为工作表添加两列
-                orgWks.Columns.Add(System.Type.Missing);
-                orgWks.Columns.Add(System.Type.Missing);
+                var col1 = orgWks.Columns.Add(System.Type.Missing);
+                var col2 = orgWks.Columns.Add(System.Type.Missing);
 
                 // 设置长名称，单位以及备注
                 /*
@@ -107,26 +108,25 @@ namespace Originbot.Base
                 orgWks.Columns[0].Units = @"(\+(o)C)";
                 orgWks.Columns[1].LongName = "Presure";
                 orgWks.Columns[1].Units = @"(lb/in\+(2))";*/
-                orgWks.Columns[0].LongName = unit[0].Key;
-                orgWks.Columns[0].Units = unit[0].Value;
-                orgWks.Columns[1].LongName = unit[1].Key;
-                orgWks.Columns[1].Units = unit[1].Value;
+                col1.LongName = unit[0].Key;
+                col1.Units = unit[0].Value;
+                col2.LongName = unit[1].Key;
+                col2.Units = unit[1].Value;
 
                 // 设置列类型
-                orgWks.Columns[0].Type = Origin.COLTYPES.COLTYPE_X;
-                orgWks.Columns[1].Type = Origin.COLTYPES.COLTYPE_Y;
+                col1.Type = Origin.COLTYPES.COLTYPE_X;
+                col2.Type = Origin.COLTYPES.COLTYPE_Y;
 
                 // 设置长名称以及单位可见
                 orgWks.LabelVisible[LABELTYPEVALS.LT_LONG_NAME] = true;
                 orgWks.LabelVisible[LABELTYPEVALS.LT_UNIT] = true;
 
                 // 提取数据
-                var data = await DataInput.GetSingleFileContentAsync(filepath);
+                var data = DataInput.GetSingleFileContent(filepath);
 
                 // 注入工作表
-                orgWks.Columns[0].SetData(data[0].ToArray(), System.Type.Missing); //col (1)
-                orgWks.Columns[1].SetData(data[1].ToArray(), System.Type.Missing); //col (2)
-
+                col1.SetData(data[0].ToArray(), System.Type.Missing); //col (1)
+                col2.SetData(data[1].ToArray(), System.Type.Missing); //col (2)
             }
             catch (Exception)
             {
@@ -134,14 +134,15 @@ namespace Originbot.Base
             }
         }
 
-        public async void CreatWorkBookFromSettingsFile(string settingFilePath)
+        public void CreatWorkBookFromSettingsFile(string settingFilePath)
         {
-            var settingsInfo = await SettingsInput.GetSettingsInfo(settingFilePath);
+            var settingsInfo = SettingsInput.GetSettingsInfo(settingFilePath);
             if (settingsInfo == null)
             {
                 Console.WriteLine("Settings Error!");
                 return;
             }
+            //var _orgWorkBook=_org.WorksheetPages.Add(System.Type.Missing, System.Type.Missing);
             // 设置工作簿名称
             _orgWorkBook.LongName = settingsInfo.Value.Name;
             // 添加数据

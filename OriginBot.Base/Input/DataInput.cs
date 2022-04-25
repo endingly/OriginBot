@@ -12,12 +12,12 @@ namespace Originbot.Base
     public static class DataInput
     {
 
-        private static async Task<byte[]> GetByteFromSingleFileAsync(string filename)
+        private static byte[] GetByteFromSingleFile(string filename)
         {
             var stream = File.OpenRead(filename);
             byte[] buffer = new byte[stream.Length];
             Console.WriteLine($"Reading {filename} ...");
-            _ = await stream.ReadAsync(buffer);
+            _ = stream.Read(buffer);
             stream.Close();
             Console.WriteLine("done");
             return buffer;
@@ -66,9 +66,9 @@ namespace Originbot.Base
         /// 获取文件的内容
         /// </summary>
         /// <returns></returns>
-        public static async Task<List<List<double>>> GetSingleFileContentAsync(string dataFilePath)
+        public static  List<List<double>> GetSingleFileContent(string dataFilePath)
         {
-            var buf = await GetByteFromSingleFileAsync(dataFilePath);
+            var buf = GetByteFromSingleFile(dataFilePath);
             return Parse(Encoding.UTF8.GetString(buf));
         }
     }
