@@ -16,7 +16,7 @@ namespace Originbot.Test
         [Fact]
         public void Test_GetSingleFileContent()
         {
-            string file = "D:\\用户\\2020-2023\\研究生涯\\实验数据\\微空心阴极放电模拟\\[2022.4.1] 风洞项目经验 [9.5mm] [托宽后方]\\数据分析\\平板\\电子密度\\电子密度_偏轴1.txt";
+            string file = "D:\\鐢ㄦ埛\\2020-2023\\鐮旂┒鐢熸动\\瀹為獙鏁版嵁\\寰┖蹇冮槾鏋佹斁鐢垫ā鎷焅\[2022.4.1] 椋庢礊椤圭洰缁忛獙 [9.5mm] [鎵樺鍚庢柟]\\鏁版嵁鍒嗘瀽\\骞虫澘\\鐢靛瓙瀵嗗害\\鐢靛瓙瀵嗗害_鍋忚酱1.txt";
             var result = DataInput.GetSingleFileContent(file);
             foreach (var item in result[0])
             {
