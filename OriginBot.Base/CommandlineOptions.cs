@@ -10,7 +10,7 @@ namespace Originbot.Base
 {
     public class CommandlineOptions
     {
-        [Option('f', "file", Required = false, HelpText = "Input settings file path.")]
-        public string? Filepath { get; set; }
+        [Option('d', "directory", Required = true, HelpText = "Path of input files.")]
+        public string? Filespath { get; set; }
     }
 }

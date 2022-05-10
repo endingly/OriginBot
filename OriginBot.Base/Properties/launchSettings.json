@@ -2,7 +2,7 @@
   "profiles": {
     "OriginBot.Base": {
       "commandName": "Project",
-      "commandLineArgs": "-f \"D:\\Users\\codelib\\OriginBot\\data.txt\""
+      "commandLineArgs": "-d \"D:\\用户\\2020-2023\\研究生涯\\实验数据\\微空心阴极放电模拟\\[2022.5.3][400 0 -200][场近似][重新跑][时间加长]\\数据分析\\三针\""
     }
   }
 }

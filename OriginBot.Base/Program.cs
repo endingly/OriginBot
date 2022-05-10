@@ -14,14 +14,14 @@ namespace Originbot
         static void Run(CommandlineOptions options)
         {
             OriginProject origin = new OriginProject();
-            if (options.Filepath != null)
+            if (options.Filespath != null)
             {
-                origin.CreatDataGroupFromSettingsFile(options.Filepath);
+                origin.CreatDataGroupFromDirectory(options.Filespath);
                 origin.Exit();
             }
             else
             {
-                System.Console.Error.WriteLine("Maybe input settings file path!");
+                System.Console.Error.WriteLine("Maybe input path is nowork!");
             }
         }
     }
