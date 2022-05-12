@@ -14,12 +14,14 @@ namespace Originbot.Base
     public struct Folder
     {
         public string Name;
+        public List<Tuple<string, string, string>> unit;
         public List<KeyValuePair<string,string>> Files;
         
 
         public Folder()
         {
             Name = string.Empty;
+            unit = new List<Tuple<string, string, string>>();
             Files = new List<KeyValuePair<string, string>>();
         }
     }
@@ -38,8 +40,6 @@ namespace Originbot.Base
             
             // 拿到目标路径下的所有文件夹
             var fileDirectorys = DirInfo.GetDirectories();
-                        //where ".png,.jpg,.jpge,.bmp,.ico".Contains(f.Extension.ToLower())
-                        //select f;
             List<Folder> result = new List<Folder>();
             
             foreach (var f in fileDirectorys)
@@ -55,6 +55,11 @@ namespace Originbot.Base
                 // 将数据集依次存储
                 foreach (var f2 in fs)
                 {
+                    if (f2.FullName.Contains("setting"))
+                    {
+                        d.unit = SettingsInput.ParseSettings(f2.FullName);
+                        continue;
+                    }
                     d.Files.Add(new KeyValuePair<string, string>(f2.Name, f2.FullName));
                 }
                 result.Add(d);

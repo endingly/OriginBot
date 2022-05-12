@@ -74,12 +74,12 @@ namespace Originbot.Base
             // 添加数据
             for (int i = 0; i < settingsInfo.Files.Count; i++)
             {
-                CreateWorkSheet(settingsInfo.Files[i].Value);
+                CreateWorkSheet(settingsInfo.Files[i].Value, settingsInfo.unit);
             }
             Save();
         }
 
-        private void CreateWorkSheet(string filepath)
+        private void CreateWorkSheet(string filepath, List<Tuple<string, string, string>> unit)
         {
             try
             {
@@ -105,10 +105,12 @@ namespace Originbot.Base
                 orgWks.Columns[0].Units = @"(\+(o)C)";
                 orgWks.Columns[1].LongName = "Presure";
                 orgWks.Columns[1].Units = @"(lb/in\+(2))";*/
-                //col1.LongName = unit[0].Key;
-                //col1.Units = unit[0].Value;
-                //col2.LongName = unit[1].Key;
-                //col2.Units = unit[1].Value;
+                col1.LongName = unit[0].Item2;
+                col1.Units = unit[0].Item3;
+
+                // 直接在这里填入列名称了，工具项目要什么飞机大炮
+                col2.LongName = orgWks.Name;
+                col2.Units = unit[1].Item3;
 
                 // 设置列类型
                 col1.Type = Origin.COLTYPES.COLTYPE_X;
@@ -136,7 +138,7 @@ namespace Originbot.Base
             
             var parsResult = PathInput.GetInputFilesInfo(FilesPath);
             
-            string ProjectSavePath = FilesPath + "\\数据分析.opj";
+            string ProjectSavePath = FilesPath + "\\数据分析.opju";
             if (parsResult == null)
             {
                 Console.WriteLine("Path is empty!");
@@ -253,7 +255,5 @@ namespace Originbot.Base
             }
         }
         #endregion
-
-
     }
 }
